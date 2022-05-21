@@ -36,7 +36,10 @@ function deleteOrCheckTodo(event){
 
     if(item.classList[0] === 'trash-btn'){
         const todo = item.parentElement;
-        todo.remove();
+        todo.classList.add("fall");
+        todo.addEventListener("transitionend", function() {
+            todo.remove();
+        });
     }
 
     if(item.classList[0] === 'complete-btn'){
@@ -45,3 +48,4 @@ function deleteOrCheckTodo(event){
         console.log("completed");
     }
 }
+
