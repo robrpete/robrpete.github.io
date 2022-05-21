@@ -37,7 +37,7 @@ form button{
     color: #313866;
     background: white;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
 }
 form button:hover {
     background: #313866;
@@ -99,3 +99,41 @@ form button:hover {
     transform: translateY(8rem) rotateZ(20deg);
     opacity: 0;
 }
+
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+}
+
+select{
+    color: #313866;
+    width: 8rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.select{
+    margin: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.select::after{
+    content: "\25BC";
+    position: absolute;
+    background: #313866;
+    top: 0;
+    right: 0;
+    padding: 0.25rem;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+.select:hover::after{
+    background: white;
+    color: #313866;
+}
+
