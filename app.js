@@ -49,6 +49,15 @@ function deleteOrCheckTodo(event){
 
     if(item.classList[0] === 'complete-btn'){
         const todo = item.parentElement;
+        if(todo.classList[1] === "completed"){
+            removeCheckedTodoFromLocalStorage(todo)
+            console.log('delete')
+        }else{
+            saveCheckedTodosToLocal(todo.children[0].innerText)
+        }
+
+        
+        
         todo.classList.toggle("completed");
     }
 }
@@ -86,6 +95,7 @@ function saveTodosToLocal(todo){
         todos = JSON.parse(localStorage.getItem("todos"));
     }
     todos.push(todo);
+    console.log(todos)
     localStorage.setItem("todos", JSON.stringify(todos));
 }
 
@@ -117,6 +127,9 @@ function getTodos(){
 
         todoList.appendChild(todoDiv);
     });
+
+    markCheckedTodosOnLoad()
+    
 }
 
 function removeFromLocalStorage(todo){
@@ -129,4 +142,55 @@ function removeFromLocalStorage(todo){
     const todoIndex = todo.children[0].innerText;
     todos.splice(todos.indexOf(todoIndex), 1);
     localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+function removeCheckedTodoFromLocalStorage(todo){
+    let todos;
+    if(localStorage.getItem("checked") === null){
+        todos = [];
+    }else{
+        todos = JSON.parse(localStorage.getItem("checked"));
+    }
+    const todoIndex = todo.children[0].innerText;
+    todos.splice(todos.indexOf(todoIndex), 1);
+    localStorage.setItem("checked", JSON.stringify(todos));
+}
+
+function saveCheckedTodosToLocal(todo){
+    let todos;
+    console.log(todos)
+    if(localStorage.getItem("checked") === null){
+        todos = [];
+        console.log(todos)
+    }else{
+        todos = JSON.parse(localStorage.getItem("checked"));
+        console.log(todos)
+    }
+    console.log(todo)
+    todos.push(todo);
+    console.log(todos)
+    localStorage.setItem("checked", JSON.stringify(todos));
+}
+
+function markCheckedTodosOnLoad(){
+    let todos = [];
+
+    if(localStorage.getItem("todos") !== null){
+        todos = JSON.parse(localStorage.getItem("todos"));
+    }
+
+    let checkedTodos = [];
+
+    if(localStorage.getItem("checked") !== null){
+        checkedTodos = JSON.parse(localStorage.getItem("checked"));
+    }
+
+    let listTodos = todoList.childNodes;
+    listTodos.forEach(function(todo){
+        for (let i = 0; i < checkedTodos.length; i++) {
+            if(checkedTodos[i] === todo.children[0].innerText){
+                todo.classList.toggle('completed')
+            }
+        }
+    })
 }
